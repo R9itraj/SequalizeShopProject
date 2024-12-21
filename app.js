@@ -1,4 +1,5 @@
 const path = require('path');
+const sequelize=require('./util/database');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -21,8 +22,11 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.get404);
-
-const PORT = process.env.PORT || 3000; // Change to a different port
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+sequelize.sync().then(res=>{
+    app.listen(3000, () => {
+        console.log(`Server running on port `);
+    });
+}).catch(err=>{
+    console.log(err);
 });
+
